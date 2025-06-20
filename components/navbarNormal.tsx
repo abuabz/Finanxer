@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -8,10 +8,29 @@ export default function NavbarNormal() {
     const [isLoaded, setIsLoaded] = useState(false)
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const pathname = usePathname()
+    const mobileNavRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         setIsLoaded(true)
     }, [])
+
+    useEffect(() => {
+        if (!mobileMenuOpen) return
+
+        function handleClickOutside(event: MouseEvent) {
+            if (
+                mobileNavRef.current &&
+                !mobileNavRef.current.contains(event.target as Node)
+            ) {
+                setMobileMenuOpen(false)
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside)
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside)
+        }
+    }, [mobileMenuOpen])
 
     const navItems = ["Home", "About", "Products", "Pricing", "Demo", "Contact"]
 
@@ -68,7 +87,10 @@ export default function NavbarNormal() {
             </div>
             {/* Mobile nav */}
             {mobileMenuOpen && (
-                <nav className="md:hidden bg-brand-primary px-4 pb-4">
+                <nav
+                    ref={mobileNavRef}
+                    className="md:hidden bg-brand-primary px-4 pb-4"
+                >
                     <div className="flex flex-col space-y-2">
                         {navItems.map((item, index) => {
                             const linkPath = item === "Home" ? "/" : `/${item.toLowerCase()}`
