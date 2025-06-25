@@ -169,7 +169,7 @@ export default function ProductsPage() {
       </section>
 
       {/* CTA Section with animation */}
-      <section className="py-20 bg-brand-primary text-white">
+      {/* <section className="py-20 bg-brand-primary text-white">
         <div className="container mx-auto px-4 text-center">
           <div
             ref={ctaFade.ref}
@@ -196,7 +196,7 @@ export default function ProductsPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Footer with slide-up animation */}
    <Footer/>

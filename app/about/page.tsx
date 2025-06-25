@@ -177,7 +177,7 @@ export default function AboutPage() {
               <Button
                 size="lg"
                 variant="outline"
-                className="text-white border-white hover:bg-white hover:text-blue-600 hover-lift btn-animate"
+                className="text-brand-primary border-white hover:bg-white hover:text-blue-600 hover-lift btn-animate"
                 asChild
               >
                 <Link href="/contact">Contact Us</Link>

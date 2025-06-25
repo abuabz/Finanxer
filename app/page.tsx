@@ -295,15 +295,32 @@ export default function HomePage() {
               </div>
             </div>
             <div className="relative animate-fade-in-right stagger-2 order-1 lg:order-2">
-              <div className="bg-white/10 backdrop-blur-md rounded-lg shadow-2xl p-4 md:p-8 hover-lift animate-float border border-white/20 max-w-sm mx-auto ">
-                <Image
-                  src="/mockupimg.png"
-                  alt="Finanxer Dashboard"
-                  width={300}
-                  height={200}
-                  className="rounded-lg transition-transform duration-500 hover:scale-105 w-full max-w-96 h-auto"
-                />
-              </div>
+                {/* Rotating hero image: switches between mockupimg.png and mockupimgdesk.png every 3 seconds */}
+                {(() => {
+                const images = [
+                  { src: "/mockupimgdesk.png", alt: "Finanxer Dashboard" },
+                  { src: "/mockupimg.png", alt: "Finanxer Mobile" },
+                ]
+                const [current, setCurrent] = useState(0)
+                useEffect(() => {
+                  const interval = setInterval(() => {
+                  setCurrent((prev) => (prev + 1) % images.length)
+                  }, 3000)
+                  return () => clearInterval(interval)
+                }, [])
+                return (
+                  <div className="bg-white/10 backdrop-blur-md rounded-lg shadow-2xl p-4 md:p-8 hover-lift animate-float border border-white/20 max-w-sm mx-auto ">
+                  <Image
+                    src={images[current].src}
+                    alt={images[current].alt}
+                    width={300}
+                    height={200}
+                    className="rounded-lg transition-transform duration-500 hover:scale-105 w-full max-w-96 h-auto"
+                    key={images[current].src}
+                  />
+                  </div>
+                )
+                })()}
             </div>
           </div>
         </div>
